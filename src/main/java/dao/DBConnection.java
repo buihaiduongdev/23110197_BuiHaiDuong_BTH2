@@ -7,8 +7,8 @@ public class DBConnection {
     private final String serverName = "localhost";
     private final String dbName = "BTH02";
     private final String portNumber = "1433";
-    private final String userID = "sa";               // user SQL Authentication
-    private final String password = "123456";   // mật khẩu sa
+    private final String userID = "sa";
+    private final String password = "123456";
 
     public Connection getConnection() throws Exception {
         String url = "jdbc:sqlserver://" + serverName + ":" + portNumber

@@ -1,6 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://jakarta.ee/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://jakarta.ee/jstl/fmt" %>
+<%@ include file="layout/topbar.jsp" %>
 
 <!DOCTYPE html>
 <html>
@@ -10,17 +9,20 @@
 </head>
 <body>
 	<form action="login" method="post">
-		<h2>Tạo tài khoản mới</h2>
+		<h2>Đăng nhập</h2>
 
 		<c:if test="${alert != null}">
 			<h3 class="alert alert-danger">${alert}</h3>
 		</c:if>
+
 		<section>
 			<label class="input login-input">
 				<div class="input-group">
 					<span class="input-group-addon"> <i class="fa fa-user"></i>
 					</span> <input type="text" placeholder="Tài khoản" name="username"
-						class="form-control">
+						class="form-control"
+						value="${rememberedUser != null ? rememberedUser : ''}">
+
 				</div>
 			</label>
 		</section>
@@ -35,7 +37,17 @@
 			</label>
 		</section>
 
+		<section>
+			<label> <input type="checkbox" name="rememberMe"> Ghi
+				nhớ đăng nhập
+			</label>
+		</section>
+
 		<button type="submit" class="btn btn-primary">Đăng nhập</button>
 	</form>
+
+	<p>
+		usn: admin <br> pass: 123456
+	</p>
 </body>
 </html>
