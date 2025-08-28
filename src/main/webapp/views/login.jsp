@@ -35,5 +35,10 @@
 
 		<button type="submit" class="btn btn-primary">Đăng nhập</button>
 	</form>
+	<p>
+		usn: admin
+		<br>
+		pass: 123456
+	</p>
 </body>
 </html>

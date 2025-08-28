@@ -1,7 +1,10 @@
-package dao;
+package dao.impl;
 
 import model.User;
 import java.sql.*;
+
+import dao.DBConnection;
+import dao.UserDao;
 
 public class UserDaoImpl implements UserDao {
     private Connection conn;
@@ -10,7 +13,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User get(String username) {
-        String sql = "SELECT * FROM [User] WHERE username = ?";
+        String sql = "SELECT * FROM [Users] WHERE username = ?";
         try {
             conn = new DBConnection().getConnection(); // bạn cần viết DBConnection
             ps = conn.prepareStatement(sql);

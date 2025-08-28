@@ -10,10 +10,12 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import model.User;
 import service.UserService;
-import service.UserServiceImpl;
+import service.impl.UserServiceImpl;
 
 @WebServlet(urlPatterns = "/login")
 public class LoginController extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 	        throws ServletException, IOException {
@@ -35,7 +37,7 @@ public class LoginController extends HttpServlet {
         if (user != null) {
             HttpSession session = req.getSession();
             session.setAttribute("account", user);
-            resp.sendRedirect("home.jsp"); // trang home bạn tự tạo
+            resp.sendRedirect("views/home.jsp"); // trang home bạn tự tạo
         } else {
             req.setAttribute("alert", "Sai tài khoản hoặc mật khẩu!");
             req.getRequestDispatcher("/views/login.jsp").forward(req, resp);
