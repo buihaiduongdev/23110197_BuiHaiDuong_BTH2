@@ -105,4 +105,31 @@ public class UserDaoImpl implements UserDao {
 		}
 		return false;
 	}
+	
+	@Override
+	public User getByEmail(String email) {
+	    String sql = "SELECT * FROM Users WHERE email = ?";
+	    try {
+	        ps = conn.prepareStatement(sql);
+	        ps.setString(1, email);
+	        rs = ps.executeQuery();
+	        if (rs.next()) {
+	            User user = new User();
+	            user.setId(rs.getInt("id"));
+	            user.setUserName(rs.getString("username"));
+	            user.setPassWord(rs.getString("password"));
+	            user.setEmail(rs.getString("email"));
+	            user.setFullName(rs.getString("fullname"));
+	            user.setPhone(rs.getString("phone"));
+	            user.setAvatar(rs.getString("avatar"));
+	            user.setRoleId(rs.getInt("roleid"));
+	            user.setCreatedDate(rs.getDate("createdDate"));
+	            return user;
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return null;
+	}
+
 }

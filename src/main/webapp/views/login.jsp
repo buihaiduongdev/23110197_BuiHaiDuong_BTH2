@@ -16,7 +16,7 @@
 <!-- Custom CSS -->
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/styles.css">
-	
+
 </head>
 <body>
 	<div class="auth-container">
@@ -49,6 +49,10 @@
 
 			<button type="submit" class="btn btn-primary w-100">Đăng
 				nhập</button>
+
+			<div class="mt-2 text-center">
+				<a href="forget" class="btn btn-link">Quên mật khẩu?</a>
+			</div>
 		</form>
 
 		<p class="demo-account">

@@ -41,4 +41,9 @@ public class UserServiceImpl implements UserService {
 	public boolean checkExistPhone(String phone) {
 		return userDao.checkExistPhone(phone);
 	}
+	
+	@Override
+	public User getByEmail(String email) {
+	    return userDao.getByEmail(email);
+	}
 }
