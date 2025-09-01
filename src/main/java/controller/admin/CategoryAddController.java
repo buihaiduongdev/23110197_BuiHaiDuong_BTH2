@@ -2,26 +2,26 @@ package controller.admin;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
-
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileUploadException;
-
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Part;
 import model.Category;
 import service.CategoryService;
 import service.impl.CategoryServiceImpl;
 
-@WebServlet(urlPatterns = { "/admin/category/add" })
+@WebServlet("/admin/category/add")
+@MultipartConfig(fileSizeThreshold = 1024 * 1024, // 1MB
+		maxFileSize = 20 * 1024 * 1024, // 20MB
+		maxRequestSize = 50 * 1024 * 1024 // 50MB
+)
 public class CategoryAddController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private static final String UPLOAD_DIR = "D:/uploads/category/";
 	private CategoryService cateService = new CategoryServiceImpl();
 
 	@Override
@@ -32,37 +32,22 @@ public class CategoryAddController extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		Category category = new Category();
-		DiskFileItemFactory diskFactory = new DiskFileItemFactory();
-		ServletFileUpload upload = new ServletFileUpload(diskFactory);
-		upload.setHeaderEncoding("UTF-8");
+		category.setCatename(req.getParameter("name"));
 
-		try {
-			resp.setContentType("text/html");
-			resp.setCharacterEncoding("UTF-8");
-			req.setCharacterEncoding("UTF-8");
-
-			List<FileItem> items = upload.parseRequest(req);
-			for (FileItem item : items) {
-				if (item.getFieldName().equals("name")) {
-					category.setCatename(item.getString("UTF-8"));
-				} else if (item.getFieldName().equals("icon")) {
-					String originalFileName = item.getName();
-					if (!originalFileName.isEmpty()) {
-						int index = originalFileName.lastIndexOf(".");
-						String ext = originalFileName.substring(index + 1);
-						String fileName = System.currentTimeMillis() + "." + ext;
-						File file = new File(Constant.DIR + "/category/" + fileName);
-						item.write(file);
-						category.setIcon("category/" + fileName);
-					}
-				}
-			}
-			cateService.insert(category);
-			resp.sendRedirect(req.getContextPath() + "/admin/category/list");
-		} catch (FileUploadException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();
+		Part filePart = req.getPart("icon");
+		if (filePart != null && filePart.getSize() > 0) {
+			String fileName = System.currentTimeMillis() + "_" + filePart.getSubmittedFileName();
+			File uploadDir = new File(UPLOAD_DIR);
+			if (!uploadDir.exists())
+				uploadDir.mkdirs();
+			File file = new File(uploadDir, fileName);
+			filePart.write(file.getAbsolutePath());
+			category.setIcon("category/" + fileName);
+		} else {
+			category.setIcon(null);
 		}
+
+		cateService.insert(category);
+		resp.sendRedirect(req.getContextPath() + "/admin/category/list");
 	}
 }
