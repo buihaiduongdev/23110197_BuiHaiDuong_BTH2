@@ -1,53 +1,63 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ include file="layout/topbar.jsp" %>
+<%@ include file="layout/topbar.jsp"%>
+<%@ taglib uri="jakarta.tags.core" prefix="c"%>
 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Đăng nhập</title>
+
+<!-- Bootstrap -->
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+	rel="stylesheet">
+
+<!-- Custom CSS -->
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/styles.css">
+
 </head>
 <body>
-	<form action="login" method="post">
+	<div class="auth-container">
 		<h2>Đăng nhập</h2>
 
 		<c:if test="${alert != null}">
-			<h3 class="alert alert-danger">${alert}</h3>
+			<div class="alert alert-danger">${alert}</div>
 		</c:if>
 
-		<section>
-			<label class="input login-input">
-				<div class="input-group">
-					<span class="input-group-addon"> <i class="fa fa-user"></i>
-					</span> <input type="text" placeholder="Tài khoản" name="username"
-						class="form-control"
-						value="${rememberedUser != null ? rememberedUser : ''}">
+		<form action="login" method="post">
 
-				</div>
-			</label>
-		</section>
+			<div class="mb-3 input-group">
+				<span class="input-group-text"><i class="fa fa-user"></i></span> <input
+					type="text" class="form-control" placeholder="Tài khoản"
+					name="username"
+					value="${rememberedUser != null ? rememberedUser : ''}">
+			</div>
 
-		<section>
-			<label class="input login-input">
-				<div class="input-group">
-					<span class="input-group-addon"> <i class="fa fa-lock"></i>
-					</span> <input type="password" placeholder="Mật khẩu" name="password"
-						class="form-control">
-				</div>
-			</label>
-		</section>
+			<div class="mb-3 input-group">
+				<span class="input-group-text"><i class="fa fa-lock"></i></span> <input
+					type="password" class="form-control" placeholder="Mật khẩu"
+					name="password">
+			</div>
 
-		<section>
-			<label> <input type="checkbox" name="rememberMe"> Ghi
-				nhớ đăng nhập
-			</label>
-		</section>
+			<div class="form-check mb-3">
+				<input class="form-check-input" type="checkbox" name="rememberMe"
+					id="rememberMe"> <label class="form-check-label"
+					for="rememberMe">Ghi nhớ đăng nhập</label>
+			</div>
 
-		<button type="submit" class="btn btn-primary">Đăng nhập</button>
-	</form>
+			<button type="submit" class="btn btn-primary w-100">Đăng
+				nhập</button>
 
-	<p>
-		usn: admin <br> pass: 123456
-	</p>
+			<div class="mt-2 text-center">
+				<a href="forget" class="btn btn-link">Quên mật khẩu?</a>
+			</div>
+		</form>
+
+		<p class="demo-account">
+			usn: <b>admin</b> <br> pass: <b>123456</b>
+		</p>
+	</div>
 </body>
 </html>
