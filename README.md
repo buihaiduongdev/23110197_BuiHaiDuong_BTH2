@@ -23,6 +23,7 @@ CREATE TABLE Category (
     cate_name NVARCHAR(100) NOT NULL,
     icons NVARCHAR(255) NULL
 );
+
 INSERT INTO [Users] (username, password, email, fullname, phone, roleid)
 VALUES 
 ('admin', '123456', 'admin@example.com', N'Quản Trị Viên', '0909000001', 1),
