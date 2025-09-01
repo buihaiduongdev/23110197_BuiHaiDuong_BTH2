@@ -17,6 +17,7 @@ CREATE TABLE [Users] (
     createdDate DATETIME DEFAULT GETDATE()
 );
 GO
+
 CREATE TABLE Category (
     cate_id INT IDENTITY(1,1) PRIMARY KEY,
     cate_name NVARCHAR(100) NOT NULL,
